@@ -21,6 +21,25 @@ const MENU_ITEMS = [
     },
 ]        
 
+const MEDIA_ITEMS = [
+    {
+        title: 'Facebook',
+        icon: '/images/icon-facebook.svg',
+    },
+    {
+        title: 'Twitter',
+        icon: '/images/icon-twitter.svg',
+    },
+    {
+        title: 'Pinterest',
+        icon: '/images/icon-pinterest.svg',
+    },
+    {
+        title: 'Instagram',
+        icon: '/images/icon-instagram.svg',
+    },
+]
+
 export const Footer = () => {
   return (
     <Stack
@@ -31,22 +50,29 @@ export const Footer = () => {
             px={{base: 4, md: 10}}
         >
             <Stack
-                direction='row'
+                direction={{base: 'column', lg:'row'}}
                 justify='space-between'
+                align='center'
                 py={10}
             >
                 <Stack>
-                    <Image src='/images/logo.svg' 
+                    <Image 
+                        w={{base: '200px', lg: '300px'}}
+                        src='/images/logo.svg' 
                         filter={'invert(1)'}
                     />
                 </Stack>
                 <Stack
-                    direction='row'
+                    direction={{base: 'column', lg:'row'}}
+                    align='center'
                     gap={10}
                 >
                     {
                         MENU_ITEMS.map(({title, firstLink, secondLink, thirdLink}, index) => (
-                            <Stack key={`${title}-${index}`}>
+                            <Stack key={`${title}-${index}`}
+                align={{base: 'center', lg: 'flex-start'}}
+                            
+                            >
                                 <Heading size='md' color='white' as='h4'>{title}</Heading>
                                 <Link color='white' href='#'>{firstLink}</Link>
                                 <Link color='white' href='#'>{secondLink}</Link>
@@ -61,18 +87,16 @@ export const Footer = () => {
                     gap={5}
                     align='center'
                 >
-                    <Link href='#'>
-                        <Image src='/images/icon-facebook.svg'/>
-                    </Link>
-                    <Link href='#'>
-                        <Image src='/images/icon-twitter.svg'/>
-                    </Link>
-                    <Link href='#'>
-                        <Image src='/images/icon-pinterest.svg'/>
-                    </Link>
-                    <Link href='#'>
-                        <Image src='/images/icon-instagram.svg'/>
-                    </Link>
+                    {
+                        MEDIA_ITEMS.map(({title, icon}, index) => (
+                            <Link 
+                                key={`${title}-${index}`} 
+                                href='#'
+                            >
+                                <Image src={icon}/>
+                            </Link>  
+                        ))
+                    }
                 </Stack>
             </Stack>
         </Container>

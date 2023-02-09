@@ -3,15 +3,18 @@ import { Button, Heading, Image, Stack, Text } from "@chakra-ui/react"
 export const Hero = () => {
   return (
     <Stack
-        direction={{base: 'column', md: 'row'}}
-        gap={24}
-        py={20}
-        pb={32}
+        direction={{base: 'column-reverse', lg: 'row'}}
+        gap={{base: 12, lg: 24}}
+        py={{base: 10, lg: 40}}
+        pb={{base: 32, lg: 40}}
         justify='space-between'
+        align='center'
     >
         <Stack
             justify='space-between'
+            align={{base: 'center', lg: 'flex-start'}}
             gap={5}
+            textAlign={{base: 'center', lg: 'left'}}
         >
             <Heading
                 as='h1'
@@ -29,11 +32,14 @@ export const Hero = () => {
                 colorScheme='teal'
                 borderRadius='full'
                 px={6}
-                w='30%'
-            >Get Started</Button>
+                w={{base: '40%', lg: 'auto'}}
+            >
+                Get Started
+            </Button>
         </Stack>
         <Stack>
             <Image
+                width={{base: '400px', lg: '100%'}}
                 src='/images/illustration-working.svg'
             />            
         </Stack>

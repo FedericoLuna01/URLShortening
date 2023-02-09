@@ -1,6 +1,32 @@
 import { Button, Input, Link, Stack, Text } from "@chakra-ui/react"
+import { useState } from "react"
+import { getShortLink } from "../api/getShortLink"
 
 export const Shortener = () => {
+    const [inputLink, setInputLink] = useState('')
+    const [error, setError] = useState(false)
+    const [linkList, setLinkList] = useState([])
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const data = await getShortLink(inputLink)
+        if (data.ok) {
+            setError(false)
+            const short = {
+                original: data.result.original_link,
+                short: data.result.full_short_link
+            }
+            setLinkList([{short}, ...linkList])
+            setInputLink('')
+            return
+        }
+        setError(true)
+    }
+
+    const handleCopy = (link) => {
+        navigator.clipboard.writeText(link.short.short)
+    }
+    
   return (
     <Stack
         position='relative'
@@ -14,103 +40,102 @@ export const Shortener = () => {
             pos='absolute'
             top={-16}
             w='100%'
-            p={12}
+            p={{base: 8, md: 12}}
             borderRadius='xl'
-            direction='row'
         >
             <Stack
-                direction='row'
                 w='100%'
                 as='form'
+                direction='column'
+                onSubmit={e => handleSubmit(e)}
             >
-                <Input 
-                    bgColor='white'
-                    placeholder='Shorten a link here...'
-                    size='lg'
-                />
-                <Button
-                    colorScheme='teal'
-                    size='lg'
-                    px={6}
-                    type='submit'
+                <Stack
+                    direction={{base: 'column', md:'row'}}
+                    w='100%'
                 >
-                    Shorten It!
-                </Button>
+                    <Input 
+                        isInvalid={error}
+                        errorBorderColor="red.500"
+                        bgColor='white'
+                        placeholder='Shorten a link here...'
+                        size='lg'
+                        value={inputLink}
+                        onChange={(e) => setInputLink(e.target.value.trim())}
+                    />
+                    <Button
+                        colorScheme='teal'
+                        size='lg'
+                        px={6}
+                        type='submit'
+                    >
+                        Shorten It!
+                    </Button>
+                </Stack>
+                {
+                    error && (
+                        <Stack
+                            color='red.500'
+                            fontStyle='italic'
+                            position='absolute'
+                            bottom={{base: 1, md: 5}}
+                        >
+                            <Text>Please add a link</Text>
+                        </Stack>
+                    )
+                }
             </Stack>
         </Stack>
         <Stack
-            pt={20}
+            pt={{base: 32, md: 20}}
         > 
-            <Stack
-                bg='white'
-                borderRadius='md'
-                p={4}
-                direction='row'
-                justify='space-between'
-                align='center'
-            >
-                <Stack>
+            {
+                linkList.map((link, index) => (
+                    <Stack key={index}
+                        bg='white'
+                        borderRadius='md'
+                        w='100%'
+                        p={4}
+                        direction={{base: 'column', md:'row'}}
+                        justify='space-between'
+                        align={{base: 'flex-start', md:'center'}}
+                    >
+                        <Stack>
                     <Link
                         fontWeight={'bold'}
-                        href='#'
+                        href={link.short.original}
+                        target='_blank'
                     >
-                        https://chakra-ui.com/docs/components/container/usage
+                        {link.short.original}
                     </Link>
                 </Stack>
                 <Stack
-                    direction='row'
-                    align='center'
+                    direction={{base: 'column', md:'row'}}
+                    align={{base: 'flex-start', md:'center'}}
+                    justify='flex-end'
                     gap={3}
+                    w='100%'
                 >
                     <Link
                         color='teal.300'
-                        align='center'
                         fontWeight='bold'
-                        href='#'
+                        href={link.short.short}
+                        target='_blank'
                     >
-                        https://chakra-ui.com
+                        {link.short.short}
                     </Link>
                     <Button
                         colorScheme='teal'
+                        w={{base: '100%', md: 'auto'}}
                         px={8}
-                    >Copy</Button>
+                        onClick={() => handleCopy(link)}
+                    >
+                        Copy
+                    </Button>
                 </Stack>
             </Stack>
-            <Stack
-                bg='white'
-                borderRadius='md'
-                p={4}
-                direction='row'
-                justify='space-between'
-                align='center'
-            >
-                <Stack>
-                    <Link
-                        fontWeight={'bold'}
-                        href='#'
-                    >
-                        https://chakra-ui.com/docs/components/container/usage
-                    </Link>
-                </Stack>
-                <Stack
-                    direction='row'
-                    align='center'
-                    gap={3}
-                >
-                    <Link
-                        color='teal.300'
-                        align='center'
-                        fontWeight='bold'
-                        href='#'
-                    >
-                        https://chakra-ui.com
-                    </Link>
-                    <Button
-                        colorScheme='teal'
-                        px={8}
-                    >Copy</Button>
-                </Stack>
-            </Stack>
+                ))
+            }
+                
         </Stack>
     </Stack>
   )

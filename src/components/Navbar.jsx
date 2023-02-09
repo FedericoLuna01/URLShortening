@@ -1,24 +1,15 @@
-import { Button, Image, Link, Stack } from "@chakra-ui/react"
-
-const MENU_ITEMS = [
-    {
-        title: 'Features',
-        href: '#',
-    },
-    {
-        title: 'Pricing',
-        href: '#',
-    },
-    {
-        title: 'Resources',
-        href: '#',
-    },
-]
+import { Box, Hide, Image, Show, Stack } from "@chakra-ui/react"
+import { Menu } from "./Menu"
+import { NavMobile } from "./NavMobile"
 
 export const Navbar = () => {
   return (
     <Stack
+        bg='white'
+        // pos='fixed'
         h='90px'
+        w='100%'
+        zIndex={1}
         direction='row'
         align='center'
         justify='space-between'
@@ -26,36 +17,23 @@ export const Navbar = () => {
         <Stack
             direction='row'
             gap={4}
+            align='center'
+            justify='space-between'
+            w='100%'
         >
-            <Stack>
+            <Stack
+                align='center'
+            >
                 <Image 
                     src='/images/logo.svg'
                 />
             </Stack>
-            <Stack
-                direction='row'
-                color='gray.500'
-                align='center'
-                gap={3}
-            >
-                {
-                    MENU_ITEMS.map(({title, href}, index) => (
-                        <Link key={`${title}-${index}`} href={href}>{title}</Link>
-                    ))
-                }
-            </Stack>
-        </Stack>
-        <Stack
-            direction='row'
-            align='center'
-            gap={3}
-        >
-            <Link color='gray.500' href='#'>Login</Link>
-            <Button
-                colorScheme='teal'
-                borderRadius='full'
-                px={6}
-            >Sign Up</Button>
+            <Show above='md'>
+                <Menu />
+            </Show>
+            <Hide above='md'>
+                <NavMobile />
+            </Hide>
         </Stack>
     </Stack>
   )

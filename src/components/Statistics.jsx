@@ -27,7 +27,7 @@ export const Statistics = () => {
         align='center'
         justify='center'
         gap={12}
-        h='80vh'
+        py={20}
     >
         <Stack
             textAlign='center'
@@ -45,9 +45,11 @@ export const Statistics = () => {
             </Text>
         </Stack>
         <Stack
-            direction='row'
-            h='40vh'
-            gap={5}
+            direction={{base:'column', lg:'row'}}
+            h={{base: '', lg: '300px'}}
+            gap={{base: 10, lg: 5}}
+            position='relative'
+            zIndex={2}
         >
             {
                 CARD_ITEMS.map(({title, description, image, align}, index) => (
@@ -55,7 +57,9 @@ export const Statistics = () => {
                         key={`${title}-${index}`}
                         maxH='250px'
                         maxW='300px' 
+                        zIndex={2}
                         alignSelf={align}
+                        textAlign={{base:'center', lg:'left'}}
                     >
                         <CardBody
                             pt={10}
@@ -63,6 +67,7 @@ export const Statistics = () => {
                             <Center
                                 pos='absolute'
                                 top='-30px'
+                                left={{base: '40%', lg: '10%'}}
                                 borderRadius='full'
                                 h='70px'
                                 w='70px'
@@ -87,6 +92,15 @@ export const Statistics = () => {
                     </Card>
                 ))
             }
+            <Stack
+                bg='teal.300'
+                position='absolute'
+                zIndex={1}
+                w={{base: '10px', lg: '700px'}}
+                h={{base: '400px', lg: '20px'}}
+                top={{base: '20%', lg: '50%'}}
+                left={{base: '50%', lg: '20%'}}
+            ></Stack>
         </Stack>
     </Stack>
   )

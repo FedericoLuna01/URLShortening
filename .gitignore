@@ -13,7 +13,6 @@ dist-ssr
 *.local
 
 README-TEMPLATE.md
-README.md
 design
 # Editor directories and files
 .vscode/*
