@@ -51,7 +51,7 @@ export const Shortener = () => {
             >
                 <Stack
                     direction={{base: 'column', md:'row'}}
-                    w='100%'
+                    w={'100%'}
                 >
                     <Input 
                         isInvalid={error}
@@ -93,7 +93,7 @@ export const Shortener = () => {
                     <Stack key={index}
                         bg='white'
                         borderRadius='md'
-                        w='100%'
+                        w={'100%'}
                         p={4}
                         direction={{base: 'column', md:'row'}}
                         justify='space-between'
@@ -113,7 +113,7 @@ export const Shortener = () => {
                     align={{base: 'flex-start', md:'center'}}
                     justify='flex-end'
                     gap={3}
-                    w='100%'
+                    w={{base: '100%', md: 'auto'}}
                 >
                     <Link
                         color='teal.300'
