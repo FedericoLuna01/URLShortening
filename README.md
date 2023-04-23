@@ -2,7 +2,7 @@
 
 <a name="readme-top"></a>
 
-# Heroes App
+# URL Shortener
 
 ## Sobre la aplicación
 
